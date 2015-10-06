@@ -1,0 +1,100 @@
+go-tchas
+easy mistakes to make
+19:00 6 Oct 2015
+Tags: gotchas, mistakes
+
+Mike Kusold
+Software Engineer, JumpCloud
+mike@mikekusold.com
+https://mikekusold.com/
+@mikekusold
+
+* Variable Shadowing
+.play shadow.go
+
+* Variable Shadowing - Why?
+Go is lexically scoped using blocks
+
+Blocks are defined as the contents of brackets: { }
+[[https://golang.org/ref/spec#Declarations_and_scope][Reference]]
+
+* Advanced Variable Shadowing
+.play shadow_2.go
+
+* Advanced Variable Shadowing - Fixed
+.play shadow_2_fixed.go
+
+* Writing to a map
+.play nil_map.go
+
+* Writing to a map - Why?
+    var m map[string] int
+Map types are reference types, like pointers or slices, and so the value of m above is nil; it doesn't point to an initialized map.
+
+    m := make(map[string] int)
+The make function allocates and initializes a hash map data structure and returns a map value that points to it
+[[https://blog.golang.org/go-maps-in-action][Reference]]
+
+* Writing to a map - Fixed
+.play nil_map_fixed.go
+
+* Iterating through a map
+.play iterating_map.go
+
+* Iterating through a map - Why?
+Hashmaps don't guarentee order.
+Go intentionally randomizes the order of keys in a map.
+[[https://blog.golang.org/go-maps-in-action][Reference]]
+
+* Iterating through a map - Fixed
+.play iterating_map_fixed.go
+
+* Switch fallthroughs
+.play switch_fallthrough.go
+
+* Switch fallthroughs - Why?
+Go automatically breaks after each case
+
+* Switch fallthroughs - Fix
+.play switch_fallthrough_fix_1.go
+
+* Switch fallthroughs - Alt Fix
+.play switch_fallthrough_fix_2.go
+
+* HTTP Responses
+.play response_body.go
+
+* HTTP Responses
+.play response_body_bad_defer.go
+
+* HTTP Responses
+.play response_body_better_defer.go
+
+* HTTP Responses - Why?
+If an error occurrs due to a redirect, go will return a non-nil response and error.
+[[https://golang.org/src/net/http/client.go#L423][Reference]]
+
+* HTTP Responses - Fixed
+.play response_body_fixed.go
+
+* For loop closures
+.play for_closure.go
+
+* For loop closures - Why?
+For loops reuse the iteration variable. Therefore when the loop initially instantiates the variable, that value is used each time
+
+* For loop closures - Fixed
+.play for_closure_fixed.go
+
+* Addressing Map Values
+.play addressing_map.go
+
+* Addressing Map Values - Why?
+Map elements are not addressable
+[[https://github.com/golang/go/issues/3117][Reference]]
+
+* Addressing Map Values - Fixed
+.play addressing_map_fixed.go
+
+* Learn More
+[[http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html][50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs]]
